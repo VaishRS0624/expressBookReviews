@@ -21,14 +21,34 @@ public_users.post("/register", (req,res) => {
   return res.status(201).json({ message: "User registered successfully" });
 });
 
+const getAllBooks = async () => {
+  return new Promise((resolve, reject) => {
+    setTimeout(() => {
+      resolve(books);
+    }, 1000); // Simulate a 1-second delay
+  });
+};
+
 // Get the book list available in the shop
-public_users.get('/',function (req, res) {
+public_users.get('/',async function  (req, res) {
   //Write your code here
   res.status(200).json(JSON.stringify(books));
 });
 
+const findBookByISBN = (isbn) => {
+  return new Promise((resolve, reject) => {
+    setTimeout(() => {
+      if (books[isbn]) {
+        resolve(books[isbn]);
+      } else {
+        reject(`Book with ISBN ${isbn} not found`);
+      }
+    }, 1000); // Simulate a 1-second delay
+  });
+};
+
 // Get book details based on ISBN
-public_users.get('/isbn/:isbn',function (req, res) {
+public_users.get('/isbn/:isbn', async function (req, res) {
   //Write your code here
   const isbn = req.params.isbn;
   const book = books[isbn];
